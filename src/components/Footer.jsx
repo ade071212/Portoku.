@@ -22,11 +22,12 @@ const Footer = () => {
           {/* Subtle glow effects */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[200px] bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none"></div>
           
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 relative z-10">
-            Siap Melejitkan <span className="text-gradient-cyan italic">Brand Anda?</span>
-          </h2>
+          <h2 
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 relative z-10"
+            dangerouslySetInnerHTML={{ __html: contact.ctaTitle || 'Siap Melejitkan <span class="text-gradient-cyan italic">Brand Anda?</span>' }}
+          />
           <p className="text-gray-400 max-w-2xl mx-auto mb-10 text-base md:text-lg leading-relaxed relative z-10">
-            Konsultasikan strategi digital marketing atau pengelolaan marketplace Anda sekarang secara gratis.
+            {contact.ctaDescription || 'Konsultasikan strategi digital marketing atau pengelolaan marketplace Anda sekarang secara gratis.'}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">

@@ -202,6 +202,8 @@ const AdminDashboard = () => {
     if (activeTab === 'contact') {
       return (
         <>
+          <FormField label="Judul CTA (HTML allowed)" value={formData.ctaTitle} onChange={v => setFormData({...formData, ctaTitle: v})} placeholder="Siap Melejitkan <span className='text-gradient-cyan italic'>Brand Anda?</span>" />
+          <FormTextArea label="Deskripsi CTA" value={formData.ctaDescription} onChange={v => setFormData({...formData, ctaDescription: v})} />
           <FormField label="Nomor WA atau Link (http...)" value={formData.phone} onChange={v => setFormData({...formData, phone: v})} placeholder="0812... atau https://wa.me/..." />
           <FormField label="Email" value={formData.email} onChange={v => setFormData({...formData, email: v})} />
         </>
