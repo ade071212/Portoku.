@@ -152,6 +152,7 @@ const AdminDashboard = () => {
             <FormField label="CTA Sekunder" value={formData.ctaSecondary} onChange={v => setFormData({...formData, ctaSecondary: v})} />
           </div>
           <FormImageUpload label="Foto Profil" value={formData.profileImage} onChange={v => setFormData({...formData, profileImage: v})} />
+          <FormField label="Atau URL Foto Manual" value={formData.profileImage} onChange={v => setFormData({...formData, profileImage: v})} placeholder="https://i.ibb.co/..." />
         </>
       );
     }
@@ -182,6 +183,7 @@ const AdminDashboard = () => {
             <FormField label="Ikon Emoji" value={formData.icon} onChange={v => setFormData({...formData, icon: v})} placeholder="⚛️" />
           </div>
           <FormImageUpload label="Atau Upload Icon (Gambar)" value={formData.iconUrl} onChange={v => setFormData({...formData, iconUrl: v})} />
+          <FormField label="Atau URL Icon Manual" value={formData.iconUrl} onChange={v => setFormData({...formData, iconUrl: v})} placeholder="https://..." />
           <FormTextArea label="Deskripsi" value={formData.description} onChange={v => setFormData({...formData, description: v})} />
         </>
       );
