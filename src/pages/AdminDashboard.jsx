@@ -446,7 +446,9 @@ const FormImageUpload = ({ label, value, onChange }) => {
       });
       // The API returns the path e.g. /uploads/123.jpg or a full URL from ImgBB
       const url = res.data.url;
-      const fullUrl = url.startsWith('http') ? url : `http://localhost:5000${url}`;
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const baseUrl = apiUrl.endsWith('/api') ? apiUrl.slice(0, -4) : apiUrl;
+      const fullUrl = url.startsWith('http') ? url : `${baseUrl}${url}`;
       onChange(fullUrl);
     } catch (err) {
       alert('Gagal mengupload gambar.');
