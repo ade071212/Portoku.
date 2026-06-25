@@ -201,12 +201,27 @@ const AdminDashboard = () => {
     }
     if (activeTab === 'contact') {
       return (
-        <>
-          <FormField label="Judul CTA (HTML allowed)" value={formData.ctaTitle} onChange={v => setFormData({...formData, ctaTitle: v})} placeholder="Siap Melejitkan <span className='text-gradient-cyan italic'>Brand Anda?</span>" />
-          <FormTextArea label="Deskripsi CTA" value={formData.ctaDescription} onChange={v => setFormData({...formData, ctaDescription: v})} />
-          <FormField label="Nomor WA atau Link (http...)" value={formData.phone} onChange={v => setFormData({...formData, phone: v})} placeholder="0812... atau https://wa.me/..." />
-          <FormField label="Email" value={formData.email} onChange={v => setFormData({...formData, email: v})} />
-        </>
+        <div className="space-y-6 w-full">
+          <div className="p-4 bg-white/5 border border-white/10 rounded-xl space-y-4">
+            <h4 className="text-white font-bold text-sm">Pengaturan Portofolio</h4>
+            <FormField label="Judul Portofolio (HTML allowed)" value={formData.portfolioTitle} onChange={v => setFormData({...formData, portfolioTitle: v})} placeholder="Portofolio & <span className='text-gradient-cyan italic'>Karya</span>" />
+            <FormTextArea label="Deskripsi Portofolio" value={formData.portfolioDescription} onChange={v => setFormData({...formData, portfolioDescription: v})} />
+          </div>
+
+          <div className="p-4 bg-white/5 border border-white/10 rounded-xl space-y-4">
+            <h4 className="text-white font-bold text-sm">Pengaturan Ekosistem / Network</h4>
+            <FormField label="Judul Network (HTML allowed)" value={formData.networkTitle} onChange={v => setFormData({...formData, networkTitle: v})} placeholder="Ekosistem <span className='text-gradient-cyan'>Digital</span>" />
+            <FormTextArea label="Deskripsi Network" value={formData.networkDescription} onChange={v => setFormData({...formData, networkDescription: v})} />
+          </div>
+
+          <div className="p-4 bg-white/5 border border-white/10 rounded-xl space-y-4">
+            <h4 className="text-white font-bold text-sm">Pengaturan Contact (CTA & Info)</h4>
+            <FormField label="Judul CTA (HTML allowed)" value={formData.ctaTitle} onChange={v => setFormData({...formData, ctaTitle: v})} placeholder="Siap Melejitkan <span className='text-gradient-cyan italic'>Brand Anda?</span>" />
+            <FormTextArea label="Deskripsi CTA" value={formData.ctaDescription} onChange={v => setFormData({...formData, ctaDescription: v})} />
+            <FormField label="Nomor WA atau Link (http...)" value={formData.phone} onChange={v => setFormData({...formData, phone: v})} placeholder="0812... atau https://wa.me/..." />
+            <FormField label="Email" value={formData.email} onChange={v => setFormData({...formData, email: v})} />
+          </div>
+        </div>
       );
     }
   };
@@ -231,28 +246,28 @@ const AdminDashboard = () => {
             <span className="text-xl font-display font-bold"><span className="text-white">Porto</span><span className="text-cyan-400">ku.</span></span>
             <span className="text-xs px-2 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">Admin</span>
           </div>
-          <div className="flex items-center gap-4">
-            <a href="/" target="_blank" className="text-gray-400 hover:text-white text-sm transition-colors">View Site ↗</a>
-            <button onClick={handleLogout} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20 transition-all text-sm">
-              <FiLogOut size={14}/> Logout
+          <div className="flex items-center gap-3 sm:gap-4">
+            <a href="/" target="_blank" className="hidden sm:inline-block text-gray-400 hover:text-white text-sm transition-colors">View Site ↗</a>
+            <button onClick={handleLogout} className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20 transition-all text-xs sm:text-sm">
+              <FiLogOut size={14} className="hidden sm:block"/> Logout
             </button>
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-6 py-8 flex gap-8">
+      <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8 flex flex-col md:flex-row gap-6 md:gap-8">
         {/* Sidebar Tabs */}
-        <nav className="w-56 shrink-0">
-          <div className="glass-card p-3 sticky top-24 space-y-1">
+        <nav className="w-full md:w-56 shrink-0">
+          <div className="glass-card p-3 md:sticky md:top-24 flex md:flex-col gap-2 overflow-x-auto md:overflow-visible scrollbar-hide">
             {TABS.map(tab => (
               <button
                 key={tab.id}
                 onClick={() => { setActiveTab(tab.id); setShowForm(false); }}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${activeTab === tab.id ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+                className={`whitespace-nowrap flex items-center justify-center md:justify-start gap-2 px-4 py-2.5 md:py-3 rounded-xl text-sm font-medium transition-all ${activeTab === tab.id ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
               >
-                <tab.icon size={16}/> {tab.label}
+                <tab.icon size={16}/> <span>{tab.label}</span>
                 {tab.id !== 'contact' && tab.id !== 'hero' && (
-                  <span className="ml-auto text-xs opacity-60">{data[tab.id]?.length || 0}</span>
+                  <span className="hidden md:inline-block ml-auto text-xs opacity-60">{data[tab.id]?.length || 0}</span>
                 )}
               </button>
             ))}
@@ -261,7 +276,7 @@ const AdminDashboard = () => {
 
         {/* Main Content */}
         <main className="flex-1 min-w-0">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
             <h2 className="text-2xl font-display font-bold text-white capitalize">{activeTab}</h2>
             {activeTab !== 'contact' && activeTab !== 'hero' && (
               <button onClick={handleAdd} className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-medium transition-all hover:shadow-[0_0_20px_rgba(34,211,238,0.3)] text-sm">
@@ -325,40 +340,43 @@ const AdminDashboard = () => {
                 </div>
               )}
               {data[activeTab]?.map(item => (
-                <div key={item.id} className="glass-card p-5 flex items-center gap-5 group hover:border-cyan-400/30 transition-all">
-                  {/* Icon/Image */}
-                  {activeTab === 'portfolio' && item.imageUrl && (
-                    <img src={item.imageUrl} alt={item.title} className="w-16 h-16 rounded-xl object-cover shrink-0" />
-                  )}
-                  {(activeTab === 'skills' || activeTab === 'network') && (
-                    <div className="shrink-0 w-12 flex items-center justify-center">
-                      {item.iconUrl ? (
-                        <img src={item.iconUrl} alt="icon" className="w-10 h-10 object-contain" />
-                      ) : (
-                        <span className="text-3xl">{item.icon || (item.platform ? item.platform.charAt(0) : '')}</span>
-                      )}
-                    </div>
-                  )}
+                <div key={item.id} className="glass-card p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-5 group hover:border-cyan-400/30 transition-all relative">
                   
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <h4 className="text-white font-medium truncate">{item.title || item.skillName}</h4>
-                    <p className="text-gray-400 text-sm truncate">{item.description || item.subtitle}</p>
-                    <div className="flex items-center gap-2 mt-1">
-                      {item.category && <span className="text-xs px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-300">{item.category}</span>}
-                      {item.group && <span className="text-xs px-2 py-0.5 rounded-full bg-violet-500/10 text-violet-300">{item.group}</span>}
-                      {item.createdDate && <span className="text-xs text-gray-500">{item.createdDate}</span>}
-                      {item.tags && item.tags.map(tag => <span key={tag} className="text-xs px-2 py-0.5 rounded-full bg-white/5 text-gray-400">{tag}</span>)}
+                  <div className="flex items-center gap-4 w-full sm:w-auto flex-1 min-w-0">
+                    {/* Icon/Image */}
+                    {activeTab === 'portfolio' && item.imageUrl && (
+                      <img src={item.imageUrl} alt={item.title} className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl object-cover shrink-0" />
+                    )}
+                    {(activeTab === 'skills' || activeTab === 'network') && (
+                      <div className="shrink-0 w-10 sm:w-12 flex items-center justify-center">
+                        {item.iconUrl ? (
+                          <img src={item.iconUrl} alt="icon" className="w-8 h-8 sm:w-10 sm:h-10 object-contain" />
+                        ) : (
+                          <span className="text-2xl sm:text-3xl">{item.icon || (item.platform ? item.platform.charAt(0) : '')}</span>
+                        )}
+                      </div>
+                    )}
+                    
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-white font-medium truncate text-sm sm:text-base">{item.title || item.skillName}</h4>
+                      <p className="text-gray-400 text-xs sm:text-sm truncate">{item.description || item.subtitle}</p>
+                      <div className="flex items-center flex-wrap gap-2 mt-1.5">
+                        {item.category && <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-300">{item.category}</span>}
+                        {item.group && <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-violet-500/10 text-violet-300">{item.group}</span>}
+                        {item.createdDate && <span className="text-[10px] sm:text-xs text-gray-500">{item.createdDate}</span>}
+                        {item.tags && item.tags.map(tag => <span key={tag} className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-white/5 text-gray-400">{tag}</span>)}
+                      </div>
                     </div>
                   </div>
 
                   {/* Actions */}
-                  <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
-                    <button onClick={() => handleEdit(item)} className="p-2 rounded-lg bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-all">
-                      <FiEdit3 size={14}/>
+                  <div className="flex gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity shrink-0 justify-end mt-2 sm:mt-0 w-full sm:w-auto border-t sm:border-t-0 border-white/5 pt-3 sm:pt-0">
+                    <button onClick={() => handleEdit(item)} className="p-2 sm:p-2.5 flex-1 sm:flex-none justify-center flex rounded-lg bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-all">
+                      <FiEdit3 size={14} className="sm:w-[16px] sm:h-[16px]"/>
                     </button>
-                    <button onClick={() => handleDelete(activeTab, item.id)} className="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-all">
-                      <FiTrash2 size={14}/>
+                    <button onClick={() => handleDelete(activeTab, item.id)} className="p-2 sm:p-2.5 flex-1 sm:flex-none justify-center flex rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-all">
+                      <FiTrash2 size={14} className="sm:w-[16px] sm:h-[16px]"/>
                     </button>
                   </div>
                 </div>

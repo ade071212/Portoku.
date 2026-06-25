@@ -3,11 +3,13 @@ import api from '../services/api';
 
 const Hero = () => {
   const [heroData, setHeroData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     api.get('/hero')
       .then(res => setHeroData(res.data))
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, []);
 
   const data = heroData || {
@@ -19,6 +21,16 @@ const Hero = () => {
     ctaSecondary: 'Konsultasi Gratis',
     profileImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=500&auto=format&fit=crop&crop=face'
   };
+
+  if (loading) {
+    return (
+      <section id="home" className="relative min-h-screen flex items-center justify-center pt-20 bg-gradient-radial-top">
+        <div className="flex items-center gap-3 text-cyan-500">
+          <svg className="animate-spin h-6 w-6" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="home" className="relative min-h-screen flex items-center pt-20 bg-gradient-radial-top">
@@ -62,7 +74,7 @@ const Hero = () => {
               <div className="absolute -inset-6 rounded-3xl border border-white/5 pointer-events-none hidden sm:block"></div>
               
               {/* Photo container */}
-              <div className="relative w-full aspect-[4/5] lg:h-[480px] rounded-2xl overflow-hidden bg-gradient-to-b from-gray-800 to-gray-900">
+              <div className="relative w-full h-[350px] sm:h-[420px] lg:h-[480px] rounded-2xl overflow-hidden bg-gradient-to-b from-gray-800 to-gray-900">
                 <img 
                   src={data.profileImage}
                   alt={data.name}

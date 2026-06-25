@@ -4,12 +4,18 @@ import { FiMail, FiPhone } from 'react-icons/fi';
 
 const Footer = () => {
   const [contact, setContact] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     api.get('/contact')
       .then(res => setContact(res.data))
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, []);
+
+  if (loading) {
+    return <footer id="contact" className="py-24 relative"></footer>;
+  }
 
   return (
     <footer id="contact" className="py-24 relative">

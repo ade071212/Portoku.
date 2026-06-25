@@ -4,13 +4,20 @@ import ImageLightbox from './ImageLightbox';
 
 const ProjectsGallery = () => {
   const [projects, setProjects] = useState([]);
+  const [contactData, setContactData] = useState({});
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState('All');
   const [lightboxData, setLightboxData] = useState({ isOpen: false, imageUrl: '', altText: '' });
 
   useEffect(() => {
-    api.get('/portfolio')
-      .then(res => setProjects(res.data))
+    Promise.all([
+      api.get('/portfolio'),
+      api.get('/contact')
+    ])
+      .then(([resPortfolio, resContact]) => {
+        setProjects(resPortfolio.data);
+        setContactData(resContact.data);
+      })
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
@@ -39,11 +46,12 @@ const ProjectsGallery = () => {
       <div className="container mx-auto px-6 lg:px-16 relative z-10">
         {/* Section Title */}
         <div className="text-center mb-8">
-          <h2 className="text-4xl md:text-5xl font-bold text-white">
-            Portofolio & <span className="text-gradient-cyan italic">Karya</span>
-          </h2>
+          <h2 
+            className="text-4xl md:text-5xl font-bold text-white"
+            dangerouslySetInnerHTML={{ __html: contactData.portfolioTitle || 'Portofolio & <span class="text-gradient-cyan italic">Karya</span>' }}
+          />
           <p className="text-gray-400 mt-4 max-w-2xl mx-auto">
-            Kumpulan visual campaign, laporan analitik, dan hasil optimasi yang telah saya kerjakan.
+            {contactData.portfolioDescription || 'Kumpulan visual campaign, laporan analitik, dan hasil optimasi yang telah saya kerjakan.'}
           </p>
         </div>
 

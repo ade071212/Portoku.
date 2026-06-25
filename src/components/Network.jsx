@@ -5,10 +5,17 @@ import { FiChevronRight, FiGrid, FiUser } from 'react-icons/fi';
 
 const Network = () => {
   const [networkItems, setNetworkItems] = useState([]);
+  const [contactData, setContactData] = useState({});
 
   useEffect(() => {
-    api.get('/network')
-      .then(res => setNetworkItems(res.data))
+    Promise.all([
+      api.get('/network'),
+      api.get('/contact')
+    ])
+      .then(([resNetwork, resContact]) => {
+        setNetworkItems(resNetwork.data);
+        setContactData(resContact.data);
+      })
       .catch(() => {});
   }, []);
 
@@ -56,11 +63,12 @@ const Network = () => {
           <span className="inline-block px-4 py-1.5 rounded-full bg-violet-500/10 text-cyan-400 text-xs font-bold tracking-wider uppercase mb-4 border border-violet-500/20">
             Network
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white">
-            Ekosistem <span className="text-gradient-cyan">Digital</span>
-          </h2>
+          <h2 
+            className="text-4xl md:text-5xl font-bold text-white"
+            dangerouslySetInnerHTML={{ __html: contactData.networkTitle || 'Ekosistem <span class="text-gradient-cyan">Digital</span>' }}
+          />
           <p className="text-gray-400 mt-4 max-w-2xl mx-auto">
-            Platform dan entitas yang telah saya kembangkan dan kelola secara profesional.
+            {contactData.networkDescription || 'Platform dan entitas yang telah saya kembangkan dan kelola secara profesional.'}
           </p>
         </div>
 
